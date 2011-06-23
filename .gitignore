@@ -1,2 +1,4 @@
 *.pyc
 dandelion/*.pyc
+dandelion/apps/*.pyc
+dandelion/apps/index/*.pyc

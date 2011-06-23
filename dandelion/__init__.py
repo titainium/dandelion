@@ -9,10 +9,15 @@ date: 2011-6-9
 """
 
 from flask import Flask
+from flaskext.mongoalchemy import MongoAlchemy
+
+from dandelion.apps.frontend.view import frontend
 
 DEFAULT_APP_NAME = 'dandelion'
+DEFAULT_MODULES = ((frontend, ""),
+)
 
-DEFAULT_MODULES = ()
+db = MongoAlchemy()
 
 def create_app(config=None, modules=None):
     """
@@ -28,6 +33,7 @@ def create_app(config=None, modules=None):
 
     # register module
     configure_modules(app, modules)
+    init_db(app)
 
     return app
 
@@ -38,3 +44,7 @@ def configure_modules(app, modules):
 
     for module, url_prefix in modules:
         app.register_module(module, url_prefix=url_prefix)
+
+def init_db(app):
+    db.init_app(app)
+
